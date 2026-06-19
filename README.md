@@ -179,7 +179,7 @@ Unlike charge-transfer capacitive sensors, its **narrow-band resonant architectu
 | | VCC | 3.3V |
 | | GND | GND |
 
-> 📁 See [`hardware/schematics/`](hardware/schematics/) for EAGLE schematic files.
+> 📁 See [`EAGLE SCH_LDC_FDC.pdf`](EAGLE%20SCH_LDC_FDC.pdf) for EAGLE schematic files.
 
 ---
 
