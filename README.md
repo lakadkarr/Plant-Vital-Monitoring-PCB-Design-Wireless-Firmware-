@@ -227,8 +227,6 @@ for schematic screenshots, PCB renders, and assembled board photos.
 
 ## 💻 Software
 
-> 📁 [`/firmware/`](./firmware/)
-
 Developed using the **Teensy 4.0 Arduino IDE** in simplified C/C++. Libraries used:
 
 ```cpp
