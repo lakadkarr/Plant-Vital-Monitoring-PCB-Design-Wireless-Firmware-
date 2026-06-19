@@ -267,7 +267,7 @@ uint32_t lhrValue = ((uint32_t)msb << 16) | ((uint32_t)mid << 8) | lsb;
 
 ### FDC2214 via I²C
 
-> 📄 [`/firmware/FDC2214/fdc2214_main.ino`](./firmware/FDC2214/fdc2214_main.ino)
+> 📄 [`/firmware/FDC2214/fdc2214_main.ino`](./FDC_Complete_code.ino)
 
 **I²C Address:** `0x2B` (ADDR pin HIGH) or `0x2A` (ADDR pin LOW)
 **Speed:** Up to 400 kbps
