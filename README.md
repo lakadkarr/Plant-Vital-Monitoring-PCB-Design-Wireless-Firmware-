@@ -318,32 +318,32 @@ cd plant-vital-monitoring
 
 ```
 plant-vital-monitoring/
-│
+
 ├── README.md
 │
 ├── src/
-│   ├── LDC1101_main.ino        → ./src/LDC1101_main.ino
-│   └── FDC2214_main.ino        → ./src/FDC2214_main.ino
+│   ├── [LDC1101_main.ino](./src/LDC1101_main.ino)
+│   └── [FDC2214_main.ino](./src/FDC2214_main.ino)
 │
 ├── hardware/
 │   ├── schematics/
-│   │   ├── LDC1101_schematic.png  → ./hardware/schematics/LDC1101_schematic.png
-│   │   └── FDC2214_schematic.png  → ./hardware/schematics/FDC2214_schematic.png
+│   │   ├── [LDC1101_schematic.png](./hardware/schematics/LDC1101_schematic.png)
+│   │   └── [FDC2214_schematic.png](./hardware/schematics/FDC2214_schematic.png)
 │   │
 │   └── pcb/
-│       ├── LDC1101_pcb.png        → ./hardware/pcb/LDC1101_pcb.png
-│       └── FDC2214_pcb.png        → ./hardware/pcb/FDC2214_pcb.png
+│       ├── [LDC1101_pcb.png](./hardware/pcb/LDC1101_pcb.png)
+│       └── [FDC2214_pcb.png](./hardware/pcb/FDC2214_pcb.png)
 │
 ├── docs/
-│   └── Project_Report.pdf       → ./docs/Project_Report.pdf
+│   └── [Project Report (PDF)](./docs/Project_Report.pdf)
 │
 └── images/
-    ├── system_overview.png      → ./images/system_overview.png
-    ├── ldc1101_assembled.png    → ./images/ldc1101_assembled.png
-    ├── fdc2214_assembled.png    → ./images/fdc2214_assembled.png
-    ├── wiring_diagram.png       → ./images/wiring_diagram.png
-    ├── serial_output.png        → ./images/serial_output.png
-    └── bluetooth_output.png     → ./images/bluetooth_output.png
+    ├── [System Overview](./images/system_overview.png)
+    ├── [LDC1101 Assembled PCB](./images/ldc1101_assembled.png)
+    ├── [FDC2214 Assembled PCB](./images/fdc2214_assembled.png)
+    ├── [Wiring Diagram](./images/wiring_diagram.png)
+    ├── [Serial Output](./images/serial_output.png)
+    └── [Bluetooth Output](./images/bluetooth_output.png)
 ```
 
 ---
