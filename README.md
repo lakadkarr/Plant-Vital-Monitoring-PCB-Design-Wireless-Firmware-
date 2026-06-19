@@ -69,8 +69,9 @@ The system is designed for deployment in greenhouses, vertical farms, research l
     ├──────────────────────────────────┤
     │  📱 BT05 Bluetooth → Mobile App │
     │  💾 MicroSD Card → CSV files    │
-    │  🖥️  USB Serial → PC Monitor   │
-    └──────────────────────────────────┘
+    
+    <img width="941" height="762" alt="WhatsApp Image 2026-06-19 at 13 19 56" src="https://github.com/user-attachments/assets/bb368a04-c118-4321-a6f5-7d1a752ec91d" />
+
 ```
 
 ---
