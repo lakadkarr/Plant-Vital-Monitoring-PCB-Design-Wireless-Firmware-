@@ -127,7 +127,9 @@ The **FDC2214** converts capacitance into digital data using LC resonance. It de
 
 ### 3. Teensy 4.0 — Microcontroller
 
-> 📁 [`/firmware/`](./firmware/)
+> 📁 [`/LDC1101_SPI/`](./Firmware_LDC1101_Teensy4.0_SPI.ino/)
+
+> 📁 [`/FDC2214_I2C/`](./Firmware_LDC1101_Teensy4.0_SPI.ino/)
 
 Central processing unit of the system. Manages all sensor communication, data logging, timestamping, and wireless transmission.
 
