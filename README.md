@@ -315,8 +315,9 @@ $$F_{sensor} = \frac{LHR_{output}}{2^{24}} \times CLKIN = \frac{1801089}{2^{24}}
 
 **Live data successfully streamed** to both laptop (Serial Monitor) and Android phone (BlueLight app) via Bluetooth.
 
-> 📸 Screenshots: [`/images/results/`](./images/results/)
+> 📸 Screenshots: [`/LDC_Data_Result/`](./LDC_Data_Result.jpeg/)
 
+> 📸 Screenshots: [`/Data_Mobile_APP/`](./Data_MobileAPP.jpeg/)
 ---
 
 ## 🐛 Challenges & Debugging
