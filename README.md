@@ -129,7 +129,7 @@ The **FDC2214** converts capacitance into digital data using LC resonance. It de
 
 > 📁 [`/LDC1101_SPI/`](./Firmware_LDC1101_Teensy4.0_SPI.ino/)
 
-> 📁 [`/FDC2214_I2C/`](./Firmware_LDC1101_Teensy4.0_SPI.ino/)
+> 📁 [`/FDC2214_I2C/`](./Firmware_FDC2214_Teensy4.0_I2C.ino/)
 
 Central processing unit of the system. Manages all sensor communication, data logging, timestamping, and wireless transmission.
 
