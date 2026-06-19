@@ -77,8 +77,8 @@ Designed for greenhouses, vertical farms, research labs, and open-field agricult
 
 ### 1. LDC1101 — Inductance Sensor
 
-> 📁 [`/hardware/LDC1101/`](./LDC_1101_sch.png/)
-
+> 📁 [`/hardware/LDC1101/Schematic`](./LDC_1101_sch.png/)
+> 📁 [`/hardware/LDC1101/PCB Board`](./LDC_1101_brd.png/)
 The **LDC1101** is a high-resolution inductance-to-digital converter that detects tiny changes in an LC circuit caused by plant stem movement or proximity to metallic objects.
 
 | Feature | Specification |
