@@ -221,7 +221,7 @@ CSB goes LOW → [R/W bit | 7-bit address] → [8-bit data] → CSB goes HIGH
 
 | File | Description |
 |---|---|
-| [`src/LDC1101_main.ino`](src/LDC1101_main.ino) | Full LDC1101 data acquisition + SD + Bluetooth |
+| [LDC1101 Firmware](src/LDC1101_main.ino) | Full LDC1101 data acquisition + SD + Bluetooth |
 | [`src/FDC2214_main.ino`](src/FDC2214_main.ino) | FDC2214 capacitance sensing via I²C |
 
 ---
