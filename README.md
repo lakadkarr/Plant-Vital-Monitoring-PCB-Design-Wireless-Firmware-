@@ -152,7 +152,7 @@ Battery-backed real-time clock that timestamps every sensor reading. Communicate
 
 ### 5. MicroSD Card Adapter
 
-> 📁 [`/hardware/components/`](./hardware/components/)
+> 📁 [`/hardware/components/`](./SD_Card_Adapter.jpeg/)
 
 Positioned at the PCB edge for easy access. Stores timestamped sensor data in **CSV format** via SPI at 10 MHz.
 
