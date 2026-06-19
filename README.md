@@ -353,6 +353,12 @@ $$F_{sensor} = \frac{LHR_{output}}{2^{24}} \times CLKIN = \frac{1801089}{2^{24}}
 ⬜ FDC2214 Full Integration (PCB redesign in progress)
 ⬜ Capacitance-to-moisture calibration
 ```
+## 📚 Documentation
+
+| Document | Description |
+|-----------|-------------|
+| [📄Project Report](./Project_Report_Plant_vital_monitoring.pdf) | Complete project documentation, design, implementation, and results |
+
 
 ---
 
