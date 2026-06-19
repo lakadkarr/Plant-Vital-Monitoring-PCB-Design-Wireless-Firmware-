@@ -332,7 +332,9 @@ $$F_{sensor} = \frac{LHR_{output}}{2^{24}} \times CLKIN = \frac{1801089}{2^{24}}
 
 **Fix:** Redesigned the PCB layout with corrected I²C routing. Communication was restored after the updated board was fabricated.
 
-> 📸 Debug images: [`/images/debugging/`](./images/debugging/)
+> 📸 Debug images: [`/images/debugging_logic_Analyzer/`](./Debbuging_logic_Analyzer.jpeg/)
+
+> 📸 Debug images: [`/images/debugging ACKbitmissing/`](./Debugging_Ackbit_Missing.jpeg/)
 
 ---
 
