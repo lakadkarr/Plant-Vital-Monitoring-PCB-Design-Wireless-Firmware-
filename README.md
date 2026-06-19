@@ -103,7 +103,9 @@ $$F_{sensor} = \frac{1}{2\pi\sqrt{L \cdot C}}$$
 
 ### 2. FDC2214 — Capacitance Sensor
 
-> 📁 [`/hardware/FDC2214/`](./hardware/FDC2214/)
+> 📁 [`/hardware/FDC2214/`](./FDC2214_sch.png/)
+
+> 📁 [`/hardware/FDC2214/`](./FDC2214_brd.png/)
 
 The **FDC2214** converts capacitance into digital data using LC resonance. It detects moisture changes in soil, leaves, or air — without direct contact.
 
