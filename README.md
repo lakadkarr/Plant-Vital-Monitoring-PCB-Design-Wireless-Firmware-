@@ -319,30 +319,31 @@ cd plant-vital-monitoring
 ```
 plant-vital-monitoring/
 │
-├── README.md                        ← You are here
+├── README.md
 │
 ├── src/
-│   ├── LDC1101_main.ino             ← LDC1101 complete firmware
-│   └── FDC2214_main.ino             ← FDC2214 complete firmware
+│   ├── LDC1101_main.ino        → ./src/LDC1101_main.ino
+│   └── FDC2214_main.ino        → ./src/FDC2214_main.ino
 │
 ├── hardware/
 │   ├── schematics/
-│   │   ├── LDC1101_schematic.png    ← EAGLE schematic export
-│   │   └── FDC2214_schematic.png    ← EAGLE schematic export
+│   │   ├── LDC1101_schematic.png  → ./hardware/schematics/LDC1101_schematic.png
+│   │   └── FDC2214_schematic.png  → ./hardware/schematics/FDC2214_schematic.png
+│   │
 │   └── pcb/
-│       ├── LDC1101_pcb.png          ← PCB layout export
-│       └── FDC2214_pcb.png          ← PCB layout export
+│       ├── LDC1101_pcb.png        → ./hardware/pcb/LDC1101_pcb.png
+│       └── FDC2214_pcb.png        → ./hardware/pcb/FDC2214_pcb.png
 │
 ├── docs/
-│   └── Project_Report.pdf           ← Full project report
+│   └── Project_Report.pdf       → ./docs/Project_Report.pdf
 │
 └── images/
-    ├── system_overview.png          ← Complete setup photo
-    ├── ldc1101_assembled.png        ← Assembled LDC1101 PCB
-    ├── fdc2214_assembled.png        ← Assembled FDC2214 PCB
-    ├── wiring_diagram.png           ← Full wiring photo
-    ├── serial_output.png            ← SD card data screenshot
-    └── bluetooth_output.png         ← Mobile app screenshot
+    ├── system_overview.png      → ./images/system_overview.png
+    ├── ldc1101_assembled.png    → ./images/ldc1101_assembled.png
+    ├── fdc2214_assembled.png    → ./images/fdc2214_assembled.png
+    ├── wiring_diagram.png       → ./images/wiring_diagram.png
+    ├── serial_output.png        → ./images/serial_output.png
+    └── bluetooth_output.png     → ./images/bluetooth_output.png
 ```
 
 ---
