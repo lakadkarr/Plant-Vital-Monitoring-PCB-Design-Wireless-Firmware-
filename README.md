@@ -181,7 +181,9 @@ All PCBs were designed in **Autodesk EAGLE** with goals of minimizing noise, max
 | LDC1101 PCB | [`/hardware/Sch/LDC1101/`](./LDC_1101_sch.png/) + [`/hardware/brd/LDC1101/`](./LDC1101_brd.png/) | Schematic + Eagle layout |
 | FDC2214 PCB | [`/hardware/Sch/FDC2214/`](./FDC2214_sch.png/) + [`/hardware/brd/FDC2214/`](./FDC2214_brd.png/) | Schematic + Eagle layout |
 
-> 📸 See [`/images/`](./images/) for schematic screenshots, PCB renders, and assembled board photos.
+> 📸 See [`/LDC Chip/`](./LDC_PCB_Designed.jpeg/)  [`/FDC Chip/`](./FDC_PCB_Designed.jpeg/)
+
+for schematic screenshots, PCB renders, and assembled board photos.
 
 **Design decisions:**
 - LDC1101 placed **centrally** for stable signal routing
