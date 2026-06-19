@@ -316,7 +316,6 @@ cd plant-vital-monitoring
 
 ## 📁 Project Structure
 
-```
 plant-vital-monitoring/
 
 ├── README.md
@@ -344,7 +343,6 @@ plant-vital-monitoring/
     ├── [Wiring Diagram](./images/wiring_diagram.png)
     ├── [Serial Output](./images/serial_output.png)
     └── [Bluetooth Output](./images/bluetooth_output.png)
-```
 
 ---
 
