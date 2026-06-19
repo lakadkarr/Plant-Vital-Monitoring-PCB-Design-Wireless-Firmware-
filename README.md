@@ -166,7 +166,7 @@ LHRData: 1893464   Time: 15:0:3   Date: 30/6/2025
 
 ### 6. BT05 Bluetooth Module
 
-> 📁 [`/hardware/components/`](./hardware/components/)
+> 📁 [`/hardware/components/`](./BT05_Bluetooth_Module.jpeg/)
 
 Enables wireless data streaming to Android smartphones or PCs via UART. Used with the **BlueLight** Bluetooth terminal app for real-time monitoring without a wired connection.
 
