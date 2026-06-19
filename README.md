@@ -7,6 +7,21 @@
 ![Status](https://img.shields.io/badge/Status-Completed-brightgreen?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-Academic-orange?style=for-the-badge)
 
+## 🛠️ Technical Skills
+
+<div align="center">
+
+![PCB Design](https://img.shields.io/badge/PCB%20Design-EAGLE%20%7C%20KiCad%20%7C%20Altium-orange?style=for-the-badge)
+![Embedded C](https://img.shields.io/badge/Embedded%20C-C%2FC%2B%2B-blue?style=for-the-badge)
+![Sensors](https://img.shields.io/badge/Sensor%20Integration-LDC1101%20%7C%20FDC2214-green?style=for-the-badge)
+![I2C SPI UART](https://img.shields.io/badge/Communication-I2C%20%7C%20SPI%20%7C%20UART-purple?style=for-the-badge)
+![IoT Systems](https://img.shields.io/badge/IoT-Data%20Logging%20%7C%20Wireless%20Transmission-red?style=for-the-badge)
+![MCU](https://img.shields.io/badge/Microcontroller-Teensy%204.0%20%7C%20Arduino-black?style=for-the-badge)
+![Data Logging](https://img.shields.io/badge/Data%20Logging-SD%20Card%20%7C%20CSV%20Format-brightgreen?style=for-the-badge)
+![Debugging](https://img.shields.io/badge/Hardware-Debugging%20%7C%20Signal%20Analysis-yellow?style=for-the-badge)
+
+</div>
+
 > **Non-invasive, industrial-grade plant health monitoring using capacitive and inductive sensing — with real-time Bluetooth streaming and SD card logging.**
 
 </div>
