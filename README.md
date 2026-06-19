@@ -178,8 +178,8 @@ All PCBs were designed in **Autodesk EAGLE** with goals of minimizing noise, max
 
 | Board | Files | Description |
 |---|---|---|
-| LDC1101 PCB | [`/hardware/LDC1101/`](./hardware/LDC1101/) | Schematic + Eagle layout |
-| FDC2214 PCB | [`/hardware/FDC2214/`](./hardware/FDC2214/) | Schematic + Eagle layout |
+| LDC1101 PCB | [`/hardware/Sch/LDC1101/`](./LDC_1101_sch.png/) + [`/hardware/brd/LDC1101/`](./LDC1101_brd.png/) | Schematic + Eagle layout |
+| FDC2214 PCB | [`/hardware/Sch/FDC2214/`](./FDC2214_sch.png/) + [`/hardware/brd/FDC2214/`](./FDC2214_brd.png/) | Schematic + Eagle layout |
 
 > 📸 See [`/images/`](./images/) for schematic screenshots, PCB renders, and assembled board photos.
 
