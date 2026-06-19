@@ -144,7 +144,7 @@ Central processing unit of the system. Manages all sensor communication, data lo
 
 ### 4. HW689 — RTC Module
 
-> 📁 [`/hardware/components/`](./hardware/components/)
+> 📁 [`/hardware/components/`](./RTC_HW_689.jpeg/)
 
 Battery-backed real-time clock that timestamps every sensor reading. Communicates via I²C and continues tracking time even when the main system is powered down — ideal for field deployments.
 
