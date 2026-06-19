@@ -195,7 +195,9 @@ for schematic screenshots, PCB renders, and assembled board photos.
 
 ## 🔌 Wiring Diagram
 
-> 📁 [`/hardware/wiring/`](./hardware/wiring/)
+> 📁 [`/hardware/wiring/`](./Hardware_Wiring.jpeg/)
+
+> 📁 [`/hardware/wiring/`](./Harware_Wiring_Sketch.jpeg/)
 
 | Module | Pin | Teensy 4.0 |
 |---|---|---|
