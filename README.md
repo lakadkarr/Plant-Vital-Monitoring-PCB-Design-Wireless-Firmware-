@@ -240,7 +240,7 @@ Developed using the **Teensy 4.0 Arduino IDE** in simplified C/C++. Libraries us
 
 ### LDC1101 via SPI
 
-> 📄 [`/firmware/LDC1101/ldc1101_main.ino`](./firmware/LDC1101/ldc1101_main.ino)
+> 📄 [`/firmware/LDC1101/ldc1101_main.ino`](./LDC1101_Complete_code.ino)
 
 **SPI Configuration:** 1 MHz, Mode 0 (CPOL=0, CPHA=0), MSB first
 
