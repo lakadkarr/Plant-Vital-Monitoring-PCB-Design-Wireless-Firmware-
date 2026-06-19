@@ -1,375 +1,415 @@
-# 🌱 Plant Vital Monitoring with Industrial Sensors
+# 🌿 Plant Vital Monitoring with Industrial Sensors
 
-> **TU Chemnitz · Department of Electrical Engineering and Information Technology**  
-> Chair of Measurement and Sensor Technology · Prof. Dr.-Ing. Olfa Kanoun  
-> Project Lab Embedded Systems · Group 11 · July 2025
+<div align="center">
+
+![TU Chemnitz](https://img.shields.io/badge/TU%20Chemnitz-Department%20of%20EE%20%26%20IT-009640?style=for-the-badge)
+![Embedded Systems](https://img.shields.io/badge/Project%20Lab-Embedded%20Systems-blue?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Completed-brightgreen?style=for-the-badge)
+![License](https://img.shields.io/badge/License-Academic-orange?style=for-the-badge)
+
+> **Non-invasive, industrial-grade plant health monitoring using capacitive and inductive sensing — with real-time Bluetooth streaming and SD card logging.**
+
+</div>
 
 ---
 
-## 📋 Table of Contents
-- [Overview](#overview)
-- [System Architecture](#system-architecture)
-- [Hardware Components](#hardware-components)
-- [Sensor Details](#sensor-details)
-- [Circuit & Wiring](#circuit--wiring)
-- [Software & Code](#software--code)
-- [Results](#results)
-- [Challenges & Solutions](#challenges--solutions)
-- [Getting Started](#getting-started)
-- [Project Structure](#project-structure)
-- [Team](#team)
+## 📑 Table of Contents
+
+- [Overview](#-overview)
+- [System Architecture](#-system-architecture)
+- [Hardware Components](#-hardware-components)
+  - [LDC1101 — Inductance Sensor](#1-ldc1101--inductance-sensor)
+  - [FDC2214 — Capacitance Sensor](#2-fdc2214--capacitance-sensor)
+  - [Teensy 4.0 — Microcontroller](#3-teensy-40--microcontroller)
+  - [HW689 — RTC Module](#4-hw689--rtc-module)
+  - [MicroSD Card Adapter](#5-microsd-card-adapter)
+  - [BT05 Bluetooth Module](#6-bt05-bluetooth-module)
+- [PCB Design](#-pcb-design)
+- [Wiring Diagram](#-wiring-diagram)
+- [Software](#-software)
+  - [LDC1101 via SPI](#ldc1101-via-spi)
+  - [FDC2214 via I²C](#fdc2214-via-i2c)
+- [Results](#-results)
+- [Challenges & Debugging](#-challenges--debugging)
+- [Project Roadmap](#-project-roadmap)
+- [Team](#-team)
+- [References](#-references)
 
 ---
 
 ## 🔍 Overview
 
-This project implements a **smart, non-invasive plant health monitoring system** using industrial-grade sensors. It tracks:
+This project implements a **smart, non-invasive plant monitoring system** using industrial-grade sensors to support precision agriculture and smart farming. The system tracks:
 
-- 🌿 **Plant stem motion & growth** — via inductance sensing (LDC1101)
-- 💧 **Soil & leaf moisture** — via capacitance sensing (FDC2214)
-- 🕐 **Real-time timestamped logging** — via RTC module (HW-689)
-- 📡 **Wireless data transmission** — via Bluetooth (BT05)
-- 💾 **Local data storage** — via MicroSD card (CSV format)
+| Parameter | Sensor Used | Method |
+|---|---|---|
+| Plant stem movement / growth | LDC1101 (inductive) | Non-contact inductance change |
+| Soil/leaf surface moisture | FDC2214 (capacitive) | Capacitance via LC resonance |
+| Timestamp of each reading | HW689 RTC | I²C real-time clock |
 
-The system is designed for deployment in greenhouses, vertical farms, research labs, and open-field agriculture.
+All data is:
+- ⏱️ **Timestamped** with a battery-backed RTC
+- 💾 **Stored locally** on a microSD card in CSV format
+- 📱 **Streamed wirelessly** via Bluetooth to smartphones or PCs
 
-```
-┌─────────────────────────────────────────────────────────┐
-│              Plant Vital Monitoring System               │
-│                                                         │
-│  [LDC1101]──SPI──┐                                     │
-│  Inductance       ├──[Teensy 4.0]──I²C──[HW-689 RTC]  │
-│  Sensor           │       │                             │
-│  [FDC2214]──I²C──┘       ├──SPI──[MicroSD Card]       │
-│  Capacitance              │                             │
-│  Sensor                   └──UART──[BT05 Bluetooth]    │
-└─────────────────────────────────────────────────────────┘
-```
+Designed for greenhouses, vertical farms, research labs, and open-field agriculture.
 
 ---
 
 ## 🏗️ System Architecture
 
 ```
-                        ┌──────────────────┐
-                        │   Teensy 4.0     │
-                        │  Microcontroller │
-                        │  (Central MCU)   │
-                        └────────┬─────────┘
-               ┌─────────────────┼──────────────────┐
-               │                 │                  │
-    ┌──────────▼───┐   ┌────────▼──────┐  ┌───────▼──────┐
-    │  LDC1101     │   │   FDC2214     │  │   HW-689 RTC │
-    │  (SPI)       │   │   (I²C)       │  │   (I²C)      │
-    │  Inductance  │   │  Capacitance  │  │  Timestamps  │
-    └──────────────┘   └───────────────┘  └──────────────┘
-               │
-    ┌──────────▼───────────────────────┐
-    │         Data Output              │
-    ├──────────────────────────────────┤
-    │  📱 BT05 Bluetooth → Mobile App │
-    │  💾 MicroSD Card → CSV files    │
-    
-  
-
+┌──────────────────────────────────────────────────────────────┐
+│                        Teensy 4.0                            │
+│                    (Central Processing)                      │
+│                                                              │
+│   SPI ◄──── LDC1101 (Inductance)   [Stem movement / growth] │
+│   I²C ◄──── FDC2214 (Capacitance)  [Moisture / humidity]    │
+│   I²C ◄──── HW689 RTC              [Timestamps]             │
+│   SPI ────► MicroSD Adapter        [CSV data logging]       │
+│  UART ────► BT05 Bluetooth         [Wireless streaming]     │
+└──────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-  <img width="600" height="600" alt="WhatsApp Image 2026-06-19 at 13 19 56" src="https://github.com/user-attachments/assets/bb368a04-c118-4321-a6f5-7d1a752ec91d" />
-
 ## 🔧 Hardware Components
 
-| Component | Model | Interface | Purpose |
-|---|---|---|---|
-| Microcontroller | Teensy 4.0 | — | Central processing unit |
-| Inductance Sensor | LDC1101 | SPI | Plant stem motion & growth |
-| Capacitance Sensor | FDC2214 | I²C | Soil/leaf moisture detection |
-| Real-Time Clock | HW-689 (PCF8563) | I²C | Timestamp generation |
-| Storage | MicroSD Card Adapter | SPI | CSV data logging |
-| Wireless | BT05 Bluetooth Module | UART | Wireless data streaming |
+### 1. LDC1101 — Inductance Sensor
 
-### PCB Design
-Both sensor boards (LDC1101 and FDC2214) were designed from scratch in **Autodesk EAGLE**, providing:
-- Cleaner signal routing vs. breadboard
-- Reduced EMI/noise interference
-- Compact, field-deployable form factor
+> 📁 [`/hardware/LDC1101/`](./hardware/LDC1101/)
 
----
+The **LDC1101** is a high-resolution inductance-to-digital converter that detects tiny changes in an LC circuit caused by plant stem movement or proximity to metallic objects.
 
-## 📡 Sensor Details
-
-### LDC1101 — Inductance-to-Digital Converter
-
-The LDC1101 drives an LC resonator circuit and monitors the energy required to keep it oscillating, measuring:
-- **Resonant Frequency (L):** stem growth & displacement
-- **Parallel Resistance (Rp):** material properties
-
-**Key Specs:**
-| Parameter | Value |
+| Feature | Specification |
 |---|---|
 | Supply Voltage | 1.8 V – 3.3 V |
 | Frequency Range | 500 kHz – 10 MHz |
+| RP Resolution | 16-bit |
 | L Resolution | 16-bit or 24-bit |
-| Rp Resolution | 16-bit |
-| Package | VSON-10 (3×3 mm) |
 | Operating Temp | –40°C to +125°C |
-| Interface | 4-pin SPI |
+| Package | VSON-10 (3 mm × 3 mm) |
+| Communication | SPI (4-wire) |
 
 **Resonant Frequency Formula:**
 
 $$F_{sensor} = \frac{1}{2\pi\sqrt{L \cdot C}}$$
 
-Where:
-- `L` = sensor inductance (Henrys)
-- `C` = sensor parallel capacitance (Farads)
+**Applications in this project:** Stem expansion detection, plant growth direction sensing, non-contact movement tracking.
 
 ---
 
-### FDC2214 — Capacitance-to-Digital Converter
+### 2. FDC2214 — Capacitance Sensor
 
-The FDC2214 uses an LC resonator to detect capacitance shifts caused by:
-- Soil moisture changes
-- Leaf proximity or surface moisture
-- Ambient humidity variation
+> 📁 [`/hardware/FDC2214/`](./hardware/FDC2214/)
 
-Unlike charge-transfer capacitive sensors, its **narrow-band resonant architecture** makes it virtually immune to EMI.
+The **FDC2214** converts capacitance into digital data using LC resonance. It detects moisture changes in soil, leaves, or air — without direct contact.
 
-**Key Specs:**
-| Parameter | Value |
+| Feature | Specification |
 |---|---|
 | Supply Voltage | 2.7 V – 3.6 V |
 | Resolution | Up to 28-bit |
 | Active Current | 2.1 mA |
-| Max Input Capacitance | 250 nF |
-| Package | WQFN-16 (4×4 mm) |
 | Operating Temp | –40°C to +125°C |
-| Interface | I²C (up to 400 kbps) |
+| Package | WQFN-16 (4 mm × 4 mm) |
+| Communication | I²C (up to 400 kbps) |
+| Max Input Cap | 250 nF |
+
+**Key advantage:** Resonant sensing architecture provides strong EMI immunity, even under fluorescent lighting.
+
+**Applications in this project:** Soil moisture measurement, leaf surface moisture, ambient humidity tracking.
 
 ---
 
-## 🔌 Circuit & Wiring
+### 3. Teensy 4.0 — Microcontroller
 
-### Wiring Diagram
+> 📁 [`/firmware/`](./firmware/)
+
+Central processing unit of the system. Manages all sensor communication, data logging, timestamping, and wireless transmission.
+
+**Responsibilities:**
+- Reads LDC1101 via **SPI** (pins 10–13)
+- Reads FDC2214 via **I²C** (pins 16–17)
+- Reads HW689 RTC via **I²C** (pins 18–19)
+- Logs to SD card via **SPI** (pin 9 CS)
+- Streams data via **UART → BT05** (pins 0–1)
+
+---
+
+### 4. HW689 — RTC Module
+
+> 📁 [`/hardware/components/`](./hardware/components/)
+
+Battery-backed real-time clock that timestamps every sensor reading. Communicates via I²C and continues tracking time even when the main system is powered down — ideal for field deployments.
+
+---
+
+### 5. MicroSD Card Adapter
+
+> 📁 [`/hardware/components/`](./hardware/components/)
+
+Positioned at the PCB edge for easy access. Stores timestamped sensor data in **CSV format** via SPI at 10 MHz.
+
+**Data format example:**
+```
+LHRData: 1892504   Time: 15:0:2   Date: 30/6/2025
+LHRData: 1893464   Time: 15:0:3   Date: 30/6/2025
+```
+
+---
+
+### 6. BT05 Bluetooth Module
+
+> 📁 [`/hardware/components/`](./hardware/components/)
+
+Enables wireless data streaming to Android smartphones or PCs via UART. Used with the **BlueLight** Bluetooth terminal app for real-time monitoring without a wired connection.
+
+---
+
+## 🖥️ PCB Design
+
+All PCBs were designed in **Autodesk EAGLE** with goals of minimizing noise, maximizing component density, and ensuring signal integrity.
+
+| Board | Files | Description |
+|---|---|---|
+| LDC1101 PCB | [`/hardware/LDC1101/`](./hardware/LDC1101/) | Schematic + Eagle layout + Gerbers |
+| FDC2214 PCB | [`/hardware/FDC2214/`](./hardware/FDC2214/) | Schematic + Eagle layout + Gerbers |
+
+> 📸 See [`/images/`](./images/) for schematic screenshots, PCB renders, and assembled board photos.
+
+**Design decisions:**
+- LDC1101 placed **centrally** for stable signal routing
+- FDC2214 placed **centrally** with flexible electrode connections to soil/leaf probes
+- MicroSD adapter placed at **PCB edge** for easy card access
+- BT05 placed near **communication ports**
+
+---
+
+## 🔌 Wiring Diagram
+
+> 📁 [`/hardware/wiring/`](./hardware/wiring/)
 
 | Module | Pin | Teensy 4.0 |
 |---|---|---|
-| **RTC HW-689** | SCL | SCL0 (Pin 19) |
+| **RTC HW689** | SCL | SCL0 (Pin 19) |
 | | SDA | SDA0 (Pin 18) |
 | | VCC | 3.3V |
 | | GND | GND |
-| **MicroSD Adapter** | MISO | MISO (Pin 12) |
-| | MOSI | MOSI (Pin 11) |
-| | SCK | SCK (Pin 13) |
+| **MicroSD Adapter** | MISO | Pin 12 |
+| | MOSI | Pin 11 |
+| | SCK | Pin 13 |
 | | CS | Pin 9 |
 | | VCC | 5V |
-| | GND | GND |
 | **LDC1101 PCB** | SDO/INTB | MISO (Pin 12) |
 | | SCLK | SCK (Pin 13) |
 | | SDI | MOSI (Pin 11) |
 | | CSB | CS (Pin 10) |
 | | VDD | 3.3V |
-| | GND | GND |
 | **BT05 Bluetooth** | TXD | RX1 (Pin 0) |
 | | RXD | TX1 (Pin 1) |
 | | VCC | 5V |
-| | GND | GND |
 | **FDC2214 PCB** | SCL | SCL1 (Pin 16) |
 | | SDA | SDA1 (Pin 17) |
 | | VCC | 3.3V |
-| | GND | GND |
-
-> 📁 See [`EAGLE SCH_LDC_FDC.pdf`](EAGLE%20SCH_LDC_FDC.pdf) for EAGLE schematic files.
+| | SD | GND |
 
 ---
 
-## 💻 Software & Code
+## 💻 Software
 
-### Libraries Required
+> 📁 [`/firmware/`](./firmware/)
+
+Developed using the **Teensy 4.0 Arduino IDE** in simplified C/C++. Libraries used:
 
 ```cpp
-#include <SPI.h>       // SPI communication (LDC1101, SD Card)
+#include <SPI.h>       // SPI communication (LDC1101, SD card)
 #include <Wire.h>      // I²C communication (FDC2214, RTC)
-#include <SdFat.h>     // SD card file system
-#include "RTClib.h"    // RTC module interface
+#include <SdFat.h>     // SD card file I/O
+#include "RTClib.h"    // RTC timestamp management
 ```
 
-Install via Arduino/Teensyduino Library Manager:
-- `SdFat` by Bill Greiman
-- `RTClib` by Adafruit
+---
 
-### SPI Communication (LDC1101)
+### LDC1101 via SPI
 
-The LDC1101 must be configured while in **Sleep Mode**. Registers are accessed with a 16-bit SPI transaction:
+> 📄 [`/firmware/LDC1101/ldc1101_main.ino`](./firmware/LDC1101/ldc1101_main.ino)
 
+**SPI Configuration:** 1 MHz, Mode 0 (CPOL=0, CPHA=0), MSB first
+
+**Key setup steps:**
+1. Wait for POR_READ = 0 (power-on reset complete)
+2. Enter **Sleep mode** to configure registers
+3. Set RPMIN, LHR_RCOUNT (0xFFFF for max resolution), LHR_OFFSET
+4. Enable LHR mode (`ALT_CONFIG.LOPTIMAL = 1`)
+5. Exit Sleep mode → begin continuous conversion
+
+**LHR Data Reading:**
+```cpp
+// Poll status register until data ready
+while (readRegister_LDC(0x3B) & 0x01);
+
+// Read 24-bit LHR value (3 bytes)
+uint8_t lsb = readRegister_LDC(0x38);
+uint8_t mid = readRegister_LDC(0x39);
+uint8_t msb = readRegister_LDC(0x3A);
+uint32_t lhrValue = ((uint32_t)msb << 16) | ((uint32_t)mid << 8) | lsb;
 ```
-CSB goes LOW → [R/W bit | 7-bit address] → [8-bit data] → CSB goes HIGH
+
+---
+
+### FDC2214 via I²C
+
+> 📄 [`/firmware/FDC2214/fdc2214_main.ino`](./firmware/FDC2214/fdc2214_main.ino)
+
+**I²C Address:** `0x2B` (ADDR pin HIGH) or `0x2A` (ADDR pin LOW)
+**Speed:** Up to 400 kbps
+
+**Channel 3 configuration:**
+```cpp
+writeRegister_FDC(0x0B, 0xFFFF); // RCOUNT_CH3 — max resolution
+writeRegister_FDC(0x17, 0x1000); // CLOCK_DIVIDERS — divide by 1
+writeRegister_FDC(0x21, 0xE800); // Drive current 1.167 mA
+writeRegister_FDC(0x1A, 0x0000); // Exit Sleep Mode
 ```
-
-- **Write:** `0x00 | (reg & 0x3F)` as command byte
-- **Read:** `0x80 | (reg & 0x3F)` as command byte
-- SPI settings: **1 MHz, MSBFIRST, SPI_MODE0**
-
-### I²C Communication (FDC2214)
-
-- Default I²C address: `0x2B` (ADDR pin HIGH) or `0x2A` (ADDR pin LOW)
-- Max speed: **400 kbps**
-- 16-bit register read/write with standard I²C framing
-- ADDR pin must remain stable after exiting Shutdown Mode
-
-### Source Files
-
-| File | Description |
-|---|---|
-| [LDC1101 Firmware](src/LDC1101_main.ino) | Full LDC1101 data acquisition + SD + Bluetooth |
-| [`src/FDC2214_main.ino`](src/FDC2214_main.ino) | FDC2214 capacitance sensing via I²C |
 
 ---
 
 ## 📊 Results
 
-### LDC1101 — Measured Output
+### LDC1101 — Measured Data
 
-With `CLKIN = 16 MHz` and `C = 820 nF`:
+Using CLKIN = 16 MHz and C = 820 nF:
 
-```
-LHR Output (raw) = 1,801,089
+| Parameter | Value |
+|---|---|
+| LHR Output (measured) | 1,801,089 |
+| Calculated F_sensor | **1.717 MHz** |
+| Derived Inductance L | **10.5 nH** |
 
-F_sensor = (LHROutput / 2²⁴) × CLKin
-         = (1,801,089 / 16,777,216) × 16 × 10⁶
-         = 1.717 MHz
+**Formula applied:**
 
-Using F_sensor = 1/(2π√(L·C)):
-→ L = 10.5 nH
-```
+$$F_{sensor} = \frac{LHR_{output}}{2^{24}} \times CLKIN = \frac{1801089}{2^{24}} \times 16 \times 10^6 = 1.717\ \text{MHz}$$
 
-### Sample SD Card Log
+**Live data successfully streamed** to both laptop (Serial Monitor) and Android phone (BlueLight app) via Bluetooth.
 
-```
-*****SD Card Data*****
-LHRData: 1897600   Time: 15:0:0   Date: 30/6/2025
-LHRData: 1630428   Time: 15:0:1   Date: 30/6/2025
-LHRData: 1892504   Time: 15:0:2   Date: 30/6/2025
-LHRData: 1893464   Time: 15:0:3   Date: 30/6/2025
-LHRData: 1892584   Time: 15:0:5   Date: 30/6/2025
-*****SD Card END*****
-```
-
-### Bluetooth Mobile App (BlueLight for Android)
-
-Live readings streamed over BT05 to smartphone:
-```
-1:14:49.875 PM  LHRData: 1811264
-1:14:48.825 PM  LHRData: 1810716
-1:14:47.745 PM  LHRData: 1811497
-1:14:46.665 PM  LHRData: 1811140
-```
+> 📸 Screenshots: [`/images/results/`](./images/results/)
 
 ---
 
-## ⚠️ Challenges & Solutions
+## 🐛 Challenges & Debugging
 
-### FDC2214 I²C Communication Failure
+### FDC2214 — Missing I²C ACK Bit
 
-**Problem:** The ACK bit was missing in I²C responses — the sensor wasn't responding to address calls from the Teensy.
+**Problem:** The FDC2214 was not responding on the I²C bus — no ACK bit observed.
 
-**Diagnosis:** Used a logic analyzer to capture the I²C bus signals and confirmed that `NACK` was being returned at the address phase.
+**Diagnosis:** Used a **logic analyzer** to inspect the I²C lines and confirmed a missing ACK from the sensor.
 
-**Root Cause:** A fault in the PCB layout caused incorrect connections at the I²C lines (SDA/SCL routed to wrong pads on the WQFN chip footprint).
+**Root cause:** A **PCB routing fault** — the I²C lines were incorrectly connected on the FDC2214 board (chip placement orientation mismatch between expected and designed footprint).
 
-**Solution:** Inspected PCB under magnification, identified the misrouted traces, redesigned the PCB layout in EAGLE, and fabricated a corrected board — resolving the communication issue.
+**Fix:** Redesigned the PCB layout with corrected I²C routing. Communication was restored after the updated board was fabricated.
+
+> 📸 Debug images: [`/images/debugging/`](./images/debugging/)
 
 ---
 
-## 🚀 Getting Started
+## 🗺️ Project Roadmap
 
-### Prerequisites
-- [Arduino IDE](https://www.arduino.cc/en/software) + [Teensyduino](https://www.pjrc.com/teensy/td_download.html)
-- Teensy 4.0 board selected in IDE
-- Required libraries installed (see above)
-
-### Steps
-
-```bash
-# 1. Clone this repository
-git clone https://github.com/YOUR_USERNAME/plant-vital-monitoring.git
-cd plant-vital-monitoring
-
-# 2. Open source file in Arduino IDE
-#    For LDC1101: open src/LDC1101_main.ino
-#    For FDC2214: open src/FDC2214_main.ino
-
-# 3. Wire your hardware (see wiring table above)
-
-# 4. Select board: Tools → Board → Teensy 4.0
-#    Select port: Tools → Port → (your Teensy port)
-
-# 5. Upload and open Serial Monitor at 9600 baud
 ```
-
-### Bluetooth Monitoring
-1. Install **BlueLight** app (Android) or any Bluetooth terminal
-2. Pair your phone with the BT05 module
-3. Connect and receive live sensor data wirelessly
-
----
-
-## 📁 Project Structure
-
-plant-vital-monitoring/
-
-├── README.md
-│
-├── src/
-│   ├── [LDC1101_main.ino](./src/LDC1101_main.ino)
-│   └── [FDC2214_main.ino](./src/FDC2214_main.ino)
-│
-├── hardware/
-│   ├── schematics/
-│   │   ├── [LDC1101_schematic.png](./hardware/schematics/LDC1101_schematic.png)
-│   │   └── [FDC2214_schematic.png](./hardware/schematics/FDC2214_schematic.png)
-│   │
-│   └── pcb/
-│       ├── [LDC1101_pcb.png](./hardware/pcb/LDC1101_pcb.png)
-│       └── [FDC2214_pcb.png](./hardware/pcb/FDC2214_pcb.png)
-│
-├── docs/
-│   └── [Project Report (PDF)](./docs/Project_Report.pdf)
-│
-└── images/
-    ├── [System Overview](./images/system_overview.png)
-    ├── [LDC1101 Assembled PCB](./images/ldc1101_assembled.png)
-    ├── [FDC2214 Assembled PCB](./images/fdc2214_assembled.png)
-    ├── [Wiring Diagram](./images/wiring_diagram.png)
-    ├── [Serial Output](./images/serial_output.png)
-    └── [Bluetooth Output](./images/bluetooth_output.png)
+✅ Design PCB in EAGLE
+✅ Fabricate PCB
+✅ Solder Components
+✅ PCB Continuity Check (Multimeter)
+✅ Connect to Teensy 4.0 (SPI / I²C)
+✅ Test SPI/I²C — Read CHIP_ID
+✅ Configure LDC1101 / FDC2214 Registers
+✅ Read Sensor Data (RP / L / C)
+✅ Store & Transmit Data (SD card + Bluetooth)
+⬜ FDC2214 Full Integration (PCB redesign in progress)
+⬜ Capacitance-to-moisture calibration
+```
 
 ---
 
 ## 👥 Team
 
-| Name | Responsibility |
-|---|---|
-| Randhir Bhagat | Hardware Design (FDC2214) & Presentation |
-| Rushikesh Lakadkar | Hardware Design (LDC1101) & Documentation |
-| Komma Siva Vyshnavi Reddy | Configuration of Bluetooth, RTC, and SD Card |
-| Sheikh Zeeshan Ahmed | Configuration of FDC & LDC with Teensy 4.0, Setup Integration |
+**Group 11 — TU Chemnitz, Chair of Measurement and Sensor Technology**
+**Supervisor:** Prof. Dr.-Ing. Olfa Kanoun
 
-**Institution:** Technische Universität Chemnitz  
-**Department:** Electrical Engineering and Information Technology  
-**Chair:** Measurement and Sensor Technology  
-**Supervisor:** Prof. Dr.-Ing. Olfa Kanoun  
-**Date:** July 2025
+| Member | Matrikel | Responsibility |
+|---|---|---|
+| **Rushikesh Lakadkar** | 836920 | Hardware Design (LDC1101) & Documentation |
+| **Randhir Bhagat** | 834322 | Hardware Design (FDC2214) & Presentation |
+| **Komma Siva Vyshnavi Reddy** | 853746 | Bluetooth, RTC & SD Card Configuration |
+| **Sheikh Zeeshan Ahmed** | 852762 | FDC & LDC Teensy Integration & Setup |
+
+📅 **Submission Date:** 2025-07-09
 
 ---
 
 ## 📚 References
 
-1. Texas Instruments. *LDC1101 1.8-V High-Resolution, High-Speed Inductance-to-Digital Converter* [Datasheet]. https://www.ti.com/lit/ds/symlink/ldc1101.pdf
-2. Texas Instruments. *FDC2214 Product Page*. https://www.ti.com/product/FDC2214
+1. Texas Instruments — [LDC1101 Datasheet](https://www.ti.com/lit/ds/symlink/ldc1101.pdf)
+2. Texas Instruments — [FDC2214 Product Page](https://www.ti.com/product/FDC2214)
+3. LDC1101 Design Files — [Google Drive](https://drive.google.com/drive/folders/1_IrN6HWdk9oRrfM9LKO4tfMBH7DWAbs8?usp=drive_link)
+4. FDC2214 Design Files — [Google Drive](https://drive.google.com/drive/folders/1Vq0TcMECMADvFhva9oh7v_DhHj89oiy?usp=drive_link)
+5. Setup Photos — [Google Drive](https://drive.google.com/drive/folders/1DPBWYxrA6F4h2PfMvFqMYst3x2fYfpn?usp=drive_link)
+6. Component Photos — [Google Drive](https://drive.google.com/drive/folders/1XJp2vHJehz3JjfGdg7PYrKDumUkCGjrt?usp=sharing)
 
 ---
 
-## 📄 License
+## 📁 Suggested Repository Structure
 
-This project was developed as part of an academic course at TU Chemnitz. Code is provided for educational purposes.
+```
+plant-vital-monitoring/
+│
+├── README.md
+│
+├── firmware/
+│   ├── LDC1101/
+│   │   └── ldc1101_main.ino
+│   └── FDC2214/
+│       └── fdc2214_main.ino
+│
+├── hardware/
+│   ├── LDC1101/
+│   │   ├── schematic.sch
+│   │   ├── board.brd
+│   │   └── gerbers/
+│   ├── FDC2214/
+│   │   ├── schematic.sch
+│   │   ├── board.brd
+│   │   └── gerbers/
+│   └── wiring/
+│       └── wiring_diagram.png
+│
+├── images/
+│   ├── pcb/
+│   │   ├── ldc1101_schematic.png
+│   │   ├── ldc1101_pcb.png
+│   │   ├── ldc1101_assembled.jpg
+│   │   ├── fdc2214_schematic.png
+│   │   ├── fdc2214_pcb.png
+│   │   └── fdc2214_assembled.jpg
+│   ├── setup/
+│   │   ├── full_wiring.jpg
+│   │   └── project_setup.jpg
+│   ├── results/
+│   │   ├── laptop_data.png
+│   │   └── mobile_app_data.png
+│   └── debugging/
+│       ├── logic_analyzer.jpg
+│       ├── ack_missing.png
+│       └── pcb_fault.jpg
+│
+└── docs/
+    └── Project_Report_Plant_Vital_Monitoring.pdf
+```
+
+---
+
+<div align="center">
+
+**Made with 🌱 at Technische Universität Chemnitz**
+*Chair of Measurement and Sensor Technology*
+
+</div>
