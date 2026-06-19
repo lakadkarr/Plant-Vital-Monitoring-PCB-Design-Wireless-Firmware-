@@ -1,4 +1,4 @@
-# 🌿 Plant Vital Monitoring with Industrial Sensors
+# 🌿 PLANT VITAL MONITORING PCB DESIGN AND WIRELESS FIRMWARE
 
 <div align="center">
 
